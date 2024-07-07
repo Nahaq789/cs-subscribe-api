@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  cs-subscribe-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/app/subscribe_api
+    tty: true
+    working_dir: /app/subscribe_api
+
+  cs-subscribe-db-dev:
+    image: postgres:alpine3.20
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+    volumes:
+      - ./postgres:/app/subscribe_api
+    ports:
+      - 6079:5432
