@@ -1,0 +1,86 @@
+/// <summary>
+/// サブスクリプション集約ルート。サブスクリプションに関する主要な情報を管理します。
+/// </summary>
+public class SubscribeAggregate : IAggregateRoot
+{
+    /// <summary>
+    /// サブスクリプション集約のID
+    /// </summary>
+    public Guid SubscribeAggregateId { get; private set; }
+
+    /// <summary>
+    /// サブスクリプションの支払日
+    /// </summary>
+    public DateTime PaymentDay { get; private set; }
+
+    /// <summary>
+    /// サブスクリプションの利用開始日
+    /// </summary>
+    public DateTime StartDay { get; private set; }
+
+    /// <summary>
+    /// サブスクリプションの解約予定日
+    /// </summary>
+    public DateTime? ExpectedDateOfCancellation { get; private set; }
+
+    /// <summary>
+    /// サブスクリプションを表す色コード（16進数）
+    /// UIのグラフで使用
+    /// </summary>
+    public string ColorCode { get; private set; }
+
+    /// <summary>
+    /// 年間契約かどうかを示すフラグ
+    /// </summary>
+    public bool IsYear { get; private set; }
+
+    /// <summary>
+    /// サブスクリプションがアクティブかどうかを示すフラグ
+    /// </summary>
+    public bool IsActive { get; private set; }
+
+
+    /// <summary>
+    /// カテゴリの外部キー
+    /// </summary>
+    public Guid _categoryAggregateId { get; private set; }
+
+    /// <summary>
+    /// サブスクリプション集約を初期化します。
+    /// </summary>
+    /// <param name="subscribeAggregateId">サブスクリプション集約のID</param>
+    /// <param name="paymentDay">支払日</param>
+    /// <param name="startDay">利用開始日</param>
+    /// <param name="colorCode">色コード（16進数）</param>
+    /// <param name="isYear">年間契約かどうか</param>
+    /// <param name="categoryAggregateId">カテゴリの外部キー</param>
+    /// <param name="expectedDateOfCancellation">解約予定日</param>
+    public SubscribeAggregate(
+        Guid subscribeAggregateId,
+        DateTime paymentDay,
+        DateTime startDay,
+        string colorCode,
+        bool isYear,
+        Guid categoryAggregateId,
+        DateTime? expectedDateOfCancellation = null)
+    {
+        SubscribeAggregateId = GeneratePrimaryKey(subscribeAggregateId);
+        PaymentDay = paymentDay;
+        StartDay = startDay;
+        ColorCode = colorCode;
+        IsYear = isYear;
+        IsActive = true; // デフォルトでアクティブに設定
+        _categoryAggregateId = categoryAggregateId;
+        ExpectedDateOfCancellation = expectedDateOfCancellation;
+    }
+
+    public Guid GeneratePrimaryKey(Guid aggregateId)
+    {
+        if (aggregateId == Guid.Empty)
+        {
+            return Guid.NewGuid();
+        }
+
+        return aggregateId;
+    }
+}
