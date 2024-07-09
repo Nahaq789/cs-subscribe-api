@@ -46,6 +46,11 @@ public class SubscribeAggregate : IAggregateRoot
     public Guid _categoryAggregateId { get; private set; }
 
     /// <summary>
+    /// ユーザ集約ID
+    /// </summary>
+    public Guid _userAggregateId { get; private set; }
+
+    /// <summary>
     /// サブスクライブアイテム
     /// </summary>
     private SubscribeItem _subscribeItem;
@@ -60,6 +65,7 @@ public class SubscribeAggregate : IAggregateRoot
     /// <param name="colorCode">色コード（16進数）</param>
     /// <param name="isYear">年間契約かどうか</param>
     /// <param name="categoryAggregateId">カテゴリの外部キー</param>
+    /// <param name="userAggregateId">ユーザ集約ID</param>
     /// <param name="expectedDateOfCancellation">解約予定日</param>
     public SubscribeAggregate(
         Guid subscribeAggregateId,
@@ -68,6 +74,7 @@ public class SubscribeAggregate : IAggregateRoot
         string colorCode,
         bool isYear,
         Guid categoryAggregateId,
+        Guid userAggregateId,
         DateTime? expectedDateOfCancellation = null) : this()
     {
         SubscribeAggregateId = GeneratePrimaryKey(subscribeAggregateId);
@@ -77,6 +84,7 @@ public class SubscribeAggregate : IAggregateRoot
         IsYear = isYear;
         IsActive = true; // デフォルトでアクティブに設定
         _categoryAggregateId = categoryAggregateId;
+        _userAggregateId = userAggregateId;
         ExpectedDateOfCancellation = expectedDateOfCancellation;
     }
 
