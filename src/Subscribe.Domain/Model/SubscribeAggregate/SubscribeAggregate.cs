@@ -30,7 +30,7 @@ public class SubscribeAggregate : IAggregateRoot
     public string ColorCode { get; private set; }
 
     /// <summary>
-    /// 年間契約かどうかを示すフラグ
+    /// 年間契約かどうか
     /// </summary>
     public bool IsYear { get; private set; }
 
@@ -44,6 +44,12 @@ public class SubscribeAggregate : IAggregateRoot
     /// カテゴリの外部キー
     /// </summary>
     public Guid _categoryAggregateId { get; private set; }
+
+    /// <summary>
+    /// サブスクライブアイテム
+    /// </summary>
+    private SubscribeItem _subscribeItem;
+    public SubscribeItem SubscribeItem => _subscribeItem;
 
     /// <summary>
     /// サブスクリプション集約を初期化します。
@@ -62,7 +68,7 @@ public class SubscribeAggregate : IAggregateRoot
         string colorCode,
         bool isYear,
         Guid categoryAggregateId,
-        DateTime? expectedDateOfCancellation = null)
+        DateTime? expectedDateOfCancellation = null) : this()
     {
         SubscribeAggregateId = GeneratePrimaryKey(subscribeAggregateId);
         PaymentDay = paymentDay;
@@ -74,6 +80,13 @@ public class SubscribeAggregate : IAggregateRoot
         ExpectedDateOfCancellation = expectedDateOfCancellation;
     }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    protected SubscribeAggregate()
+    {
+        this._subscribeItem = new SubscribeItem();
+    }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+
     public Guid GeneratePrimaryKey(Guid aggregateId)
     {
         if (aggregateId == Guid.Empty)
@@ -82,5 +95,10 @@ public class SubscribeAggregate : IAggregateRoot
         }
 
         return aggregateId;
+    }
+
+    private void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
+    {
+        _subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
     }
 }
