@@ -28,5 +28,6 @@ internal class SubscribeItemConfiguration : IEntityTypeConfiguration<SubscribeIt
             .HasForeignKey<SubscribeItem>(x => x.SubscribeAggregateId)
             .OnDelete(DeleteBehavior.Cascade);
         builder.HasIndex(x => x.SubscribeItemId);
+        builder.HasIndex(f => f.SubscribeAggregateId)
     }
 }
