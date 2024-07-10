@@ -51,6 +51,11 @@ public class SubscribeAggregate : IAggregateRoot
     public Guid _userAggregateId { get; private set; }
 
     /// <summary>
+    /// 削除日
+    /// </summary>
+    public DateTime? DeleteDay { get; private set; }
+
+    /// <summary>
     /// サブスクライブアイテム
     /// </summary>
     private SubscribeItem _subscribeItem;
@@ -67,6 +72,7 @@ public class SubscribeAggregate : IAggregateRoot
     /// <param name="categoryAggregateId">カテゴリの外部キー</param>
     /// <param name="userAggregateId">ユーザ集約ID</param>
     /// <param name="expectedDateOfCancellation">解約予定日</param>
+    /// <param name="deleteDay">削除日</param>
     public SubscribeAggregate(
         Guid subscribeAggregateId,
         DateTime paymentDay,
@@ -75,7 +81,8 @@ public class SubscribeAggregate : IAggregateRoot
         bool isYear,
         Guid categoryAggregateId,
         Guid userAggregateId,
-        DateTime? expectedDateOfCancellation = null) : this()
+        DateTime? expectedDateOfCancellation = null,
+        DateTime? deleteDay = null) : this()
     {
         SubscribeAggregateId = GeneratePrimaryKey(subscribeAggregateId);
         PaymentDay = paymentDay;
@@ -86,6 +93,7 @@ public class SubscribeAggregate : IAggregateRoot
         _categoryAggregateId = categoryAggregateId;
         _userAggregateId = userAggregateId;
         ExpectedDateOfCancellation = expectedDateOfCancellation;
+        DeleteDay = deleteDay;
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -105,6 +113,12 @@ public class SubscribeAggregate : IAggregateRoot
         return aggregateId;
     }
 
+    /// <summary>
+    /// サブスクリプションアイテムが子エンティティと認識させるためのセッター
+    /// </summary>
+    /// <param name="subscribeName">サブスクリプションの名前</param>
+    /// <param name="amount">サブスクリプションの金額</param>
+    /// <param name="subscribeAggregateId">サブスクリプション集約ID</param>
     private void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
     {
         _subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
