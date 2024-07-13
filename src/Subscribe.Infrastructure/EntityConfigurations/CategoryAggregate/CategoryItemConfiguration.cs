@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Subscribe.Domain.Model;
 
 internal class CategoryItemConfiguration : IEntityTypeConfiguration<CategoryItem>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<CategoryItem> builder)
+    public void Configure(EntityTypeBuilder<CategoryItem> builder)
     {
         builder.ToTable("category_item");
         builder.HasKey(p => p.CategoryItemId);

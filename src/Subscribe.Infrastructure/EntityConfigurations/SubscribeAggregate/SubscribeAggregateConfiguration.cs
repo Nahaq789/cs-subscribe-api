@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Subscribe.Domain.Model;
 
 internal class SubscribeAggregateConfiguration : IEntityTypeConfiguration<SubscribeAggregate>
 {
@@ -45,5 +46,19 @@ internal class SubscribeAggregateConfiguration : IEntityTypeConfiguration<Subscr
         builder.Property(e => e.DeleteDay)
             .HasColumnName("delete_day");
 
+        builder.HasOne(e => e.SubscribeItem)
+            .WithOne()
+            .HasForeignKey<SubscribeItem>(f => f.SubscribeAggregateId);
+
+        builder.Property(e => e._categoryAggregateId)
+            .IsRequired()
+            .HasColumnName("category_aggregate_id");
+
+        builder.HasOne<CategoryAggregate>()
+            .WithOne()
+            .HasForeignKey<SubscribeAggregate>(f => f._categoryAggregateId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(f => f._categoryAggregateId);
     }
 }

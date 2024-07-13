@@ -7,7 +7,7 @@ internal class CategoryAggregateConfiguration : IEntityTypeConfiguration<Categor
 {
     public void Configure(EntityTypeBuilder<CategoryAggregate> builder)
     {
-        builder.ToTable("category_item");
+        builder.ToTable("category_aggregate");
         builder.HasKey(p => p.CategoryAggregateId);
         builder.Property(p => p.CategoryAggregateId)
             .IsRequired()
@@ -29,5 +29,8 @@ internal class CategoryAggregateConfiguration : IEntityTypeConfiguration<Categor
             .IsRequired()
             .HasColumnName("is_active");
 
+        builder.HasOne(e => e.CategoryItem)
+            .WithOne()
+            .HasForeignKey<CategoryItem>(f => f.CategoryAggregateId);
     }
 }

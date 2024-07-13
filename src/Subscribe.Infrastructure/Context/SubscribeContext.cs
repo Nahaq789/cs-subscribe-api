@@ -8,7 +8,7 @@ public class SubscribeContext : DbContext
     public DbSet<CategoryAggregate> CategoryAggregate { get; set; }
     public DbSet<CategoryItem> CategoryItem { get; set; }
 
-    public SubscribeContext(DbContextOptions options) : base(options)
+    public SubscribeContext(DbContextOptions<SubscribeContext> options) : base(options)
     {
 
     }
