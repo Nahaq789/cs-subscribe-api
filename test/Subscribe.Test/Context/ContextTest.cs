@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Subscribe.Test.Infrastructure.Context;
+namespace Subscribe.Infrastructure.Test.Context;
 public class SubscribeDbContextTest
 {
     private SubscribeContext CreateContext()
