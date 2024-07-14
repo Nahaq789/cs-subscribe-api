@@ -1,8 +1,12 @@
+using Subscribe.Domain.SeedWork;
+
+namespace Subscribe.Domain.Model.SubscribeAggregate;
+
 /// <summary>
 /// サブスクリプションアイテムを表すクラス。
 /// 各サブスクリプションの詳細情報を保持します。
 /// </summary>
-public class SubscribeItem
+public class SubscribeItem : Entity
 {
     /// <summary>
     /// サブスクリプションアイテムの主キー
@@ -24,6 +28,8 @@ public class SubscribeItem
     /// </summary>
     public Guid SubscribeAggregateId { get; private set; }
 
+    // public SubscribeAggregate SubscribeAggregate { get; private set; }
+
     /// <summary>
     /// サブスクリプションアイテムを初期化します。
     /// </summary>
@@ -39,8 +45,7 @@ public class SubscribeItem
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    public SubscribeItem()
-    { }
+    public SubscribeItem() { }
 
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 

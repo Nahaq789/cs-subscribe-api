@@ -1,6 +1,6 @@
-﻿
-using Moq;
+﻿using Moq;
 using Subscribe.API.Application.Command;
+using Subscribe.Domain.Model.SubscribeAggregate;
 using Subscribe.Domain.SeedWork;
 using Xunit;
 

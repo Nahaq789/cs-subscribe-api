@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Subscribe.Domain.Model;
+using Subscribe.Domain.Model.SubscribeAggregate;
+
+namespace Subscribe.Infrastructure.EntityConfiguration;
 
 internal class SubscribeAggregateConfiguration : IEntityTypeConfiguration<SubscribeAggregate>
 {

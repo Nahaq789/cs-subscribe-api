@@ -1,7 +1,11 @@
+using Subscribe.Domain.SeedWork;
+
+namespace Subscribe.Domain.Model.SubscribeAggregate;
+
 /// <summary>
 /// サブスクリプション集約ルート。サブスクリプションに関する主要な情報を管理します。
 /// </summary>
-public class SubscribeAggregate : IAggregateRoot
+public class SubscribeAggregate : Entity, IAggregateRoot
 {
     /// <summary>
     /// サブスクリプション集約のID
@@ -81,6 +85,7 @@ public class SubscribeAggregate : IAggregateRoot
         bool isYear,
         Guid categoryAggregateId,
         Guid userAggregateId,
+        bool isActive = true,
         DateTime? expectedDateOfCancellation = null,
         DateTime? deleteDay = null) : this()
     {
@@ -89,7 +94,7 @@ public class SubscribeAggregate : IAggregateRoot
         StartDay = startDay;
         ColorCode = colorCode;
         IsYear = isYear;
-        IsActive = true; // デフォルトでアクティブに設定
+        IsActive = isActive;
         _categoryAggregateId = categoryAggregateId;
         _userAggregateId = userAggregateId;
         ExpectedDateOfCancellation = expectedDateOfCancellation;
@@ -123,6 +128,7 @@ public class SubscribeAggregate : IAggregateRoot
     /// <param name="subscribeAggregateId">サブスクリプション集約ID</param>
     public void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
     {
-        _subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
+        var subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
+        _subscribeItem = subscribeItem;
     }
 }

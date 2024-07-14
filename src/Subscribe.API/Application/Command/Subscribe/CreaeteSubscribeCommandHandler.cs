@@ -1,4 +1,5 @@
 using MediatR;
+using Subscribe.Domain.Model.SubscribeAggregate;
 
 namespace Subscribe.API.Application.Command;
 
@@ -13,19 +14,18 @@ public class CreateSubscribeCommandHandler : IRequestHandler<CreateSubscribeComm
 
     public async Task<bool> Handle(CreateSubscribeCommand command, CancellationToken cancellationToken)
     {
-        var aggregateId = Guid.NewGuid();
-        var subscribe = new SubscribeAggregate(
-                aggregateId,
+        var subscribeAggregate = new SubscribeAggregate(
+                Guid.NewGuid(),
                 command.PaymentDay,
                 command.StartDay,
                 command.ColorCode,
                 command.IsYear,
-                command._categoryAggregateId,
-                command._userAggregateId
+                command.CategoryAggregateId,
+                command.UserAggregateId
             );
-        subscribe.SetSubscribeItem(command.SubscribeName, command.Amount, aggregateId);
+        subscribeAggregate.SetSubscribeItem(command.SubscribeName, command.Amount, subscribeAggregate.SubscribeAggregateId);
 
-        await _subscribeRepository.AddAsync(subscribe);
+        await _subscribeRepository.AddAsync(subscribeAggregate);
 
         return await _subscribeRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }

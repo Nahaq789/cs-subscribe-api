@@ -1,17 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using Subscribe.Infrastructure.Context;
 using Xunit;
 
 namespace Subscribe.Infrastructure.Test.Context;
 
 /// <summary>
-/// SubscribeDbContext ‚ÌƒeƒXƒg‚ğ’ñ‹Ÿ‚µ‚Ü‚·B
+/// SubscribeDbContext ï¿½Ìƒeï¿½Xï¿½gï¿½ï¿½ñ‹Ÿ‚ï¿½ï¿½Ü‚ï¿½ï¿½B
 /// </summary>
 public class SubscribeDbContextTest
 {
     /// <summary>
-    /// ƒCƒ“ƒƒ‚ƒŠƒf[ƒ^ƒx[ƒXƒIƒvƒVƒ‡ƒ“‚ğg—p‚µ‚ÄV‚µ‚¢ SubscribeContext ‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚µ‚Ü‚·B
+    /// ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½xï¿½[ï¿½Xï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ÄVï¿½ï¿½ï¿½ï¿½ SubscribeContext ï¿½ÌƒCï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     /// </summary>
-    /// <returns>V‚µ‚¢ SubscribeContext ‚ÌƒCƒ“ƒXƒ^ƒ“ƒXB</returns>
+    /// <returns>ï¿½Vï¿½ï¿½ï¿½ï¿½ SubscribeContext ï¿½ÌƒCï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½B</returns>
     private static SubscribeContext CreateContext()
     {
         var options = new DbContextOptionsBuilder<SubscribeContext>()
@@ -22,7 +23,7 @@ public class SubscribeDbContextTest
     }
 
     /// <summary>
-    /// ƒf[ƒ^ƒx[ƒX‚Ö‚ÌÚ‘±‚ğƒeƒXƒg‚µ‚Ü‚·B
+    /// ï¿½fï¿½[ï¿½^ï¿½xï¿½[ï¿½Xï¿½Ö‚ÌÚ‘ï¿½ï¿½ï¿½ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     /// </summary>
     [Fact]
     public void Test_ConnectToDatabase_Success()
@@ -36,7 +37,7 @@ public class SubscribeDbContextTest
     }
 
     /// <summary>
-    /// ƒCƒ“ƒƒ‚ƒŠƒf[ƒ^ƒx[ƒX‚ÉŠú‘Ò‚³‚ê‚éƒe[ƒuƒ‹‚ª‘¶İ‚·‚é‚±‚Æ‚ğƒeƒXƒg‚µ‚Ü‚·B
+    /// ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½xï¿½[ï¿½Xï¿½ÉŠï¿½ï¿½Ò‚ï¿½ï¿½ï¿½ï¿½eï¿½[ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     /// </summary>
     [Fact]
     public void Test_DatabaseHasExpectedTables()

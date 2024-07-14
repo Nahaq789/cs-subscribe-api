@@ -1,4 +1,6 @@
-﻿using Subscribe.Domain.SeedWork;
+﻿using Subscribe.Domain.Model.SubscribeAggregate;
+using Subscribe.Domain.SeedWork;
+using Subscribe.Infrastructure.Context;
 
 namespace Subscribe.Infrastructure.Repositories;
 
@@ -15,5 +17,10 @@ public class SubscribeRepository : ISubscribeRepository
     public async Task AddAsync(SubscribeAggregate aggregate)
     {
         await _context.SubscribeAggregate.AddAsync(aggregate);
+    }
+
+    public void UpdateAsync(SubscribeAggregate aggregate)
+    {
+        _context.SubscribeAggregate.Update(aggregate);
     }
 }

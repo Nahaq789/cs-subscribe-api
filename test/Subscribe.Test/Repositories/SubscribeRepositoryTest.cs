@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
+using Subscribe.Domain.Model.SubscribeAggregate;
 using Subscribe.Domain.SeedWork;
+using Subscribe.Infrastructure.Context;
 using Subscribe.Infrastructure.Repositories;
 using Xunit;
 

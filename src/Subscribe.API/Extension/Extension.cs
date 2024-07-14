@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Subscribe.Domain.Model.SubscribeAggregate;
+using Subscribe.Infrastructure.Context;
+using Subscribe.Infrastructure.Repositories;
 
 public static class Extension
 {
@@ -11,5 +14,13 @@ public static class Extension
         {
             options.UseNpgsql(connectionString);
         });
+
+        var services = builder.Services;
+        services.AddMediatR((cfg) =>
+        {
+            cfg.RegisterServicesFromAssemblyContaining(typeof(Program));
+        });
+
+        builder.Services.AddTransient<ISubscribeRepository, SubscribeRepository>();
     }
 }

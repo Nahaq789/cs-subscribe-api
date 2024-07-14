@@ -1,9 +1,13 @@
-using MediatR;
 using System.Runtime.Serialization;
+using MediatR;
 
-[DataContract]
-public class CreateSubscribeCommand : IRequest<bool>
+namespace Subscribe.API.Application.Command.Subscribe;
+
+public class UpdateSubscribeCommand : IRequest<bool>
 {
+    [DataMember]
+    public Guid SubscribeAggregateId { get; set; }
+
     [DataMember]
     public DateTime PaymentDay { get; set; }
 
@@ -20,10 +24,13 @@ public class CreateSubscribeCommand : IRequest<bool>
     public bool IsYear { get; set; }
 
     [DataMember]
-    public Guid CategoryAggregateId { get; set; }
+    public bool IsActive { get; set; }
 
     [DataMember]
-    public Guid UserAggregateId { get; set; }
+    public Guid _categoryAggregateId { get; set; }
+
+    [DataMember]
+    public Guid _userAggregateId { get; set; }
 
     [DataMember]
     public string SubscribeName { get; set; }
@@ -31,24 +38,28 @@ public class CreateSubscribeCommand : IRequest<bool>
     [DataMember]
     public decimal Amount { get; set; }
 
-    public CreateSubscribeCommand(
+    public UpdateSubscribeCommand(
+        Guid subscribeAggregateId,
         DateTime paymentDay,
         DateTime startDay,
         string colorCode,
         bool isYear,
+        bool isActive,
         Guid categoryAggregateId,
         Guid userAggregateId,
         string subscribeName,
         decimal amount,
         DateTime? expectedDateOfCancellation = null)
     {
+        SubscribeAggregateId = subscribeAggregateId;
         PaymentDay = paymentDay;
         StartDay = startDay;
         ExpectedDateOfCancellation = expectedDateOfCancellation;
         ColorCode = colorCode;
         IsYear = isYear;
-        CategoryAggregateId = categoryAggregateId;
-        UserAggregateId = userAggregateId;
+        IsActive = isActive;
+        _categoryAggregateId = categoryAggregateId;
+        _userAggregateId = userAggregateId;
         SubscribeName = subscribeName;
         Amount = amount;
     }
