@@ -58,7 +58,7 @@ public class SubscribeController : Controller
         }
     }
 
-    [HttpPost("update")]
+    [HttpPut("update")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> UpdateSubscribeAsync(
