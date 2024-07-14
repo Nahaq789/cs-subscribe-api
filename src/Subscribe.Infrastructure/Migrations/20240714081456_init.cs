@@ -120,7 +120,8 @@ namespace Subscribe.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_subscribe_item_subscribe_item_id",
                 table: "subscribe_item",
-                column: "subscribe_item_id");
+                column: "subscribe_item_id",
+                unique: true);
         }
 
         /// <inheritdoc />

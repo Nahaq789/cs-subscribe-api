@@ -1,4 +1,7 @@
+namespace Subscribe.Domain.Model.SubscribeAggregate;
+
 public interface ISubscribeRepository : IRepository<SubscribeAggregate>
 {
-    Task<SubscribeAggregate> GetSubscribeFindByAggregateIdAsync(Guid aggregateId);
+    Task AddAsync(SubscribeAggregate aggregate);
+    Task<SubscribeAggregate> FindBySubscribeAggregateId(Guid aggregateId);
 }

@@ -1,9 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Subscribe.Infrastructure.Context;
+using Xunit;
 
-namespace Subscribe.Test.Infrastructure.Context;
+namespace Subscribe.Infrastructure.Test.Context;
+
+/// <summary>
+/// SubscribeDbContext �̃e�X�g��񋟂��܂��B
+/// </summary>
 public class SubscribeDbContextTest
 {
-    private SubscribeContext CreateContext()
+    /// <summary>
+    /// �C���������f�[�^�x�[�X�I�v�V�������g�p���ĐV���� SubscribeContext �̃C���X�^���X���쐬���܂��B
+    /// </summary>
+    /// <returns>�V���� SubscribeContext �̃C���X�^���X�B</returns>
+    private static SubscribeContext CreateContext()
     {
         var options = new DbContextOptionsBuilder<SubscribeContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -12,6 +22,9 @@ public class SubscribeDbContextTest
         return new SubscribeContext(options);
     }
 
+    /// <summary>
+    /// �f�[�^�x�[�X�ւ̐ڑ����e�X�g���܂��B
+    /// </summary>
     [Fact]
     public void Test_ConnectToDatabase_Success()
     {
@@ -23,6 +36,9 @@ public class SubscribeDbContextTest
         }
     }
 
+    /// <summary>
+    /// �C���������f�[�^�x�[�X�Ɋ��҂����e�[�u�������݂��邱�Ƃ��e�X�g���܂��B
+    /// </summary>
     [Fact]
     public void Test_DatabaseHasExpectedTables()
     {

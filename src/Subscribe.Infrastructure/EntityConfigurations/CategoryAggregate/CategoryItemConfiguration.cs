@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Subscribe.Domain.Model;
 
+namespace Subscribe.Infrastructure.EntityConfiguration;
+
 internal class CategoryItemConfiguration : IEntityTypeConfiguration<CategoryItem>
 {
     public void Configure(EntityTypeBuilder<CategoryItem> builder)

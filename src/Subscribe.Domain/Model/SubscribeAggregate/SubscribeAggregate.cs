@@ -1,7 +1,11 @@
+using Subscribe.Domain.SeedWork;
+
+namespace Subscribe.Domain.Model.SubscribeAggregate;
+
 /// <summary>
 /// サブスクリプション集約ルート。サブスクリプションに関する主要な情報を管理します。
 /// </summary>
-public class SubscribeAggregate : IAggregateRoot
+public class SubscribeAggregate : Entity, IAggregateRoot
 {
     /// <summary>
     /// サブスクリプション集約のID
@@ -39,7 +43,6 @@ public class SubscribeAggregate : IAggregateRoot
     /// </summary>
     public bool IsActive { get; private set; }
 
-
     /// <summary>
     /// カテゴリの外部キー
     /// </summary>
@@ -59,6 +62,7 @@ public class SubscribeAggregate : IAggregateRoot
     /// サブスクライブアイテム
     /// </summary>
     private SubscribeItem _subscribeItem;
+
     public SubscribeItem SubscribeItem => _subscribeItem;
 
     /// <summary>
@@ -81,6 +85,7 @@ public class SubscribeAggregate : IAggregateRoot
         bool isYear,
         Guid categoryAggregateId,
         Guid userAggregateId,
+        bool isActive = true,
         DateTime? expectedDateOfCancellation = null,
         DateTime? deleteDay = null) : this()
     {
@@ -89,7 +94,7 @@ public class SubscribeAggregate : IAggregateRoot
         StartDay = startDay;
         ColorCode = colorCode;
         IsYear = isYear;
-        IsActive = true; // デフォルトでアクティブに設定
+        IsActive = isActive;
         _categoryAggregateId = categoryAggregateId;
         _userAggregateId = userAggregateId;
         ExpectedDateOfCancellation = expectedDateOfCancellation;
@@ -97,10 +102,12 @@ public class SubscribeAggregate : IAggregateRoot
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+
     protected SubscribeAggregate()
     {
         this._subscribeItem = new SubscribeItem();
     }
+
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     public Guid GeneratePrimaryKey(Guid aggregateId)
@@ -119,8 +126,39 @@ public class SubscribeAggregate : IAggregateRoot
     /// <param name="subscribeName">サブスクリプションの名前</param>
     /// <param name="amount">サブスクリプションの金額</param>
     /// <param name="subscribeAggregateId">サブスクリプション集約ID</param>
-    private void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
+    public void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
     {
-        _subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
+        var subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
+        _subscribeItem = subscribeItem;
+    }
+
+    public void UpdateSubscribeAggregate(
+        DateTime paymentDay,
+        DateTime startDay,
+        string colorCode,
+        bool isYear,
+        bool isActive,
+        Guid categoryAggregateId,
+        Guid userAggregateId,
+        DateTime? expectedDateOfCancellation)
+    {
+        PaymentDay = paymentDay;
+        StartDay = startDay;
+        ColorCode = colorCode;
+        IsYear = isYear;
+        IsActive = isActive;
+        _categoryAggregateId = categoryAggregateId;
+        _userAggregateId = userAggregateId;
+        ExpectedDateOfCancellation = expectedDateOfCancellation;
+    }
+
+    public void UpdateSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
+    {
+        if (_subscribeItem == null)
+        {
+            throw new SubscribeDomainException($"集約ID: {SubscribeItem.SubscribeAggregateId} が見つかりませんでした。");
+        }
+
+        SubscribeItem.UpdateSubscribeDetail(subscribeName, amount, subscribeAggregateId);
     }
 }

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Subscribe.Domain.Model.SubscribeAggregate;
+
+namespace Subscribe.Infrastructure.EntityConfiguration;
 
 internal class SubscribeItemConfiguration : IEntityTypeConfiguration<SubscribeItem>
 {
@@ -23,11 +26,13 @@ internal class SubscribeItemConfiguration : IEntityTypeConfiguration<SubscribeIt
         builder.Property(e => e.SubscribeAggregateId)
             .IsRequired()
             .HasColumnName("subscribe_aggregate_id");
+
         builder.HasOne<SubscribeAggregate>()
             .WithOne()
             .HasForeignKey<SubscribeItem>(x => x.SubscribeAggregateId)
             .OnDelete(DeleteBehavior.Cascade);
-        builder.HasIndex(x => x.SubscribeItemId);
+
+        builder.HasIndex(x => x.SubscribeItemId).IsUnique();
         builder.HasIndex(f => f.SubscribeAggregateId);
     }
 }
