@@ -62,4 +62,11 @@ public class SubscribeItem : Entity
         }
         Amount = amount;
     }
+
+    public void UpdateSubscribeDetail(string subscribeName, decimal amount, Guid subscribeAggregateId)
+    {
+        SubscribeName = subscribeName;
+        SetAmount(amount);
+        SubscribeAggregateId = subscribeAggregateId;
+    }
 }

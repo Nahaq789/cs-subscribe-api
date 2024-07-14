@@ -76,7 +76,8 @@ public class SubscribeController : Controller
 
             using (_logger.BeginScope(new List<KeyValuePair<string, object>> { new("IdentifiedCommandId", requestId) }))
             {
-                var result = await _mediator.Send(new IdentifiedCommand<UpdateSubscribeCommand, bool>(command, requestId));
+                var requestCommand = new IdentifiedCommand<UpdateSubscribeCommand, bool>(command, requestId);
+                var result = await _mediator.Send(requestCommand.Command);
 
                 if (result)
                 {

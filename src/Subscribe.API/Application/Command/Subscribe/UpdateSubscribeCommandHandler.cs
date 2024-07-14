@@ -13,19 +13,20 @@ public class UpdateSubscribeCommandHandler : IRequestHandler<UpdateSubscribeComm
     }
     public async Task<bool> Handle(UpdateSubscribeCommand command, CancellationToken cancellationToken)
     {
-        var subscribe = new SubscribeAggregate(
-            subscribeAggregateId: command.SubscribeAggregateId,
+        var baseSubscribe = await _subscribeRepository.FindBySubscribeAggregateId(command.SubscribeAggregateId);
+
+        baseSubscribe.UpdateSubscribeAggregate(
             paymentDay: command.PaymentDay,
             startDay: command.StartDay,
             colorCode: command.ColorCode,
             isYear: command.IsYear,
             isActive: command.IsActive,
-            categoryAggregateId: command._categoryAggregateId,
-            userAggregateId: command._userAggregateId,
-            expectedDateOfCancellation: command.ExpectedDateOfCancellation
-        );
+            categoryAggregateId: command.CategoryAggregateId,
+            userAggregateId: command.UserAggregateId,
+            expectedDateOfCancellation: command.ExpectedDateOfCancellation);
 
-        _subscribeRepository.UpdateAsync(subscribe);
+        baseSubscribe.UpdateSubscribeItem(command.SubscribeName, command.Amount, command.SubscribeAggregateId);
+
         return await _subscribeRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }
 }

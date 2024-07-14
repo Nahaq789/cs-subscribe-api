@@ -1,4 +1,5 @@
-﻿using Subscribe.Domain.Model.SubscribeAggregate;
+﻿using Microsoft.EntityFrameworkCore;
+using Subscribe.Domain.Model.SubscribeAggregate;
 using Subscribe.Domain.SeedWork;
 using Subscribe.Infrastructure.Context;
 
@@ -19,8 +20,12 @@ public class SubscribeRepository : ISubscribeRepository
         await _context.SubscribeAggregate.AddAsync(aggregate);
     }
 
-    public void UpdateAsync(SubscribeAggregate aggregate)
+    public async Task<SubscribeAggregate> FindBySubscribeAggregateId(Guid aggregateId)
     {
-        _context.SubscribeAggregate.Update(aggregate);
+        var subscribe = await _context.SubscribeAggregate
+            .Include(e => e.SubscribeItem)
+            .FirstOrDefaultAsync(p => p.SubscribeAggregateId == aggregateId);
+
+        return subscribe;
     }
 }

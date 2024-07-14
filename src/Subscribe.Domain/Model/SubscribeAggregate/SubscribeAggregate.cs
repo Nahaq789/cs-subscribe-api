@@ -131,4 +131,34 @@ public class SubscribeAggregate : Entity, IAggregateRoot
         var subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
         _subscribeItem = subscribeItem;
     }
+
+    public void UpdateSubscribeAggregate(
+        DateTime paymentDay,
+        DateTime startDay,
+        string colorCode,
+        bool isYear,
+        bool isActive,
+        Guid categoryAggregateId,
+        Guid userAggregateId,
+        DateTime? expectedDateOfCancellation)
+    {
+        PaymentDay = paymentDay;
+        StartDay = startDay;
+        ColorCode = colorCode;
+        IsYear = isYear;
+        IsActive = isActive;
+        _categoryAggregateId = categoryAggregateId;
+        _userAggregateId = userAggregateId;
+        ExpectedDateOfCancellation = expectedDateOfCancellation;
+    }
+
+    public void UpdateSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
+    {
+        if (_subscribeItem == null)
+        {
+            throw new SubscribeDomainException($"集約ID: {SubscribeItem.SubscribeAggregateId} が見つかりませんでした。");
+        }
+
+        SubscribeItem.UpdateSubscribeDetail(subscribeName, amount, subscribeAggregateId);
+    }
 }

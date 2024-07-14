@@ -27,10 +27,10 @@ public class UpdateSubscribeCommand : IRequest<bool>
     public bool IsActive { get; set; }
 
     [DataMember]
-    public Guid _categoryAggregateId { get; set; }
+    public Guid CategoryAggregateId { get; set; }
 
     [DataMember]
-    public Guid _userAggregateId { get; set; }
+    public Guid UserAggregateId { get; set; }
 
     [DataMember]
     public string SubscribeName { get; set; }
@@ -58,8 +58,8 @@ public class UpdateSubscribeCommand : IRequest<bool>
         ColorCode = colorCode;
         IsYear = isYear;
         IsActive = isActive;
-        _categoryAggregateId = categoryAggregateId;
-        _userAggregateId = userAggregateId;
+        CategoryAggregateId = categoryAggregateId;
+        UserAggregateId = userAggregateId;
         SubscribeName = subscribeName;
         Amount = amount;
     }
