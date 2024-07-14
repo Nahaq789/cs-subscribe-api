@@ -1,7 +1,8 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Subscribe.Domain.Model;
+
+namespace Subscribe.Infrastructure.EntityConfiguration;
 
 internal class CategoryAggregateConfiguration : IEntityTypeConfiguration<CategoryAggregate>
 {

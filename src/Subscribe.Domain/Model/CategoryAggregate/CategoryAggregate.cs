@@ -35,6 +35,7 @@ public class CategoryAggregate : IAggregateRoot
     /// カテゴリーアイテム
     /// </summary>
     private CategoryItem _categoryItem;
+
     public CategoryItem CategoryItem => _categoryItem;
 
     /// <summary>
@@ -55,6 +56,7 @@ public class CategoryAggregate : IAggregateRoot
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+
     protected CategoryAggregate()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {

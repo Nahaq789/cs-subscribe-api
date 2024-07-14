@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Subscribe.Infrastructure.Context;
 
 #nullable disable
 
 namespace Subscribe.Infrastructure.Migrations
 {
     [DbContext(typeof(SubscribeContext))]
-    [Migration("20240713011334_init")]
+    [Migration("20240714081456_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -82,7 +83,7 @@ namespace Subscribe.Infrastructure.Migrations
                     b.ToTable("category_item", (string)null);
                 });
 
-            modelBuilder.Entity("SubscribeAggregate", b =>
+            modelBuilder.Entity("Subscribe.Domain.Model.SubscribeAggregate.SubscribeAggregate", b =>
                 {
                     b.Property<Guid>("SubscribeAggregateId")
                         .ValueGeneratedOnAdd()
@@ -135,7 +136,7 @@ namespace Subscribe.Infrastructure.Migrations
                     b.ToTable("subscribe_aggregate", (string)null);
                 });
 
-            modelBuilder.Entity("SubscribeItem", b =>
+            modelBuilder.Entity("Subscribe.Domain.Model.SubscribeAggregate.SubscribeItem", b =>
                 {
                     b.Property<long>("SubscribeItemId")
                         .ValueGeneratedOnAdd()
@@ -163,7 +164,8 @@ namespace Subscribe.Infrastructure.Migrations
                     b.HasIndex("SubscribeAggregateId")
                         .IsUnique();
 
-                    b.HasIndex("SubscribeItemId");
+                    b.HasIndex("SubscribeItemId")
+                        .IsUnique();
 
                     b.ToTable("subscribe_item", (string)null);
                 });
@@ -171,27 +173,39 @@ namespace Subscribe.Infrastructure.Migrations
             modelBuilder.Entity("Subscribe.Domain.Model.CategoryItem", b =>
                 {
                     b.HasOne("Subscribe.Domain.Model.CategoryAggregate", null)
-                        .WithOne()
+                        .WithOne("CategoryItem")
                         .HasForeignKey("Subscribe.Domain.Model.CategoryItem", "CategoryAggregateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SubscribeAggregate", b =>
+            modelBuilder.Entity("Subscribe.Domain.Model.SubscribeAggregate.SubscribeAggregate", b =>
                 {
                     b.HasOne("Subscribe.Domain.Model.CategoryAggregate", null)
                         .WithOne()
-                        .HasForeignKey("SubscribeAggregate", "_categoryAggregateId")
+                        .HasForeignKey("Subscribe.Domain.Model.SubscribeAggregate.SubscribeAggregate", "_categoryAggregateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SubscribeItem", b =>
+            modelBuilder.Entity("Subscribe.Domain.Model.SubscribeAggregate.SubscribeItem", b =>
                 {
-                    b.HasOne("SubscribeAggregate", null)
-                        .WithOne()
-                        .HasForeignKey("SubscribeItem", "SubscribeAggregateId")
+                    b.HasOne("Subscribe.Domain.Model.SubscribeAggregate.SubscribeAggregate", null)
+                        .WithOne("SubscribeItem")
+                        .HasForeignKey("Subscribe.Domain.Model.SubscribeAggregate.SubscribeItem", "SubscribeAggregateId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Subscribe.Domain.Model.CategoryAggregate", b =>
+                {
+                    b.Navigation("CategoryItem")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Subscribe.Domain.Model.SubscribeAggregate.SubscribeAggregate", b =>
+                {
+                    b.Navigation("SubscribeItem")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
