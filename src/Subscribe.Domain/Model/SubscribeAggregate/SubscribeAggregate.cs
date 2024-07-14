@@ -39,7 +39,6 @@ public class SubscribeAggregate : IAggregateRoot
     /// </summary>
     public bool IsActive { get; private set; }
 
-
     /// <summary>
     /// カテゴリの外部キー
     /// </summary>
@@ -59,6 +58,7 @@ public class SubscribeAggregate : IAggregateRoot
     /// サブスクライブアイテム
     /// </summary>
     private SubscribeItem _subscribeItem;
+
     public SubscribeItem SubscribeItem => _subscribeItem;
 
     /// <summary>
@@ -97,10 +97,12 @@ public class SubscribeAggregate : IAggregateRoot
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+
     protected SubscribeAggregate()
     {
         this._subscribeItem = new SubscribeItem();
     }
+
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     public Guid GeneratePrimaryKey(Guid aggregateId)
@@ -119,7 +121,7 @@ public class SubscribeAggregate : IAggregateRoot
     /// <param name="subscribeName">サブスクリプションの名前</param>
     /// <param name="amount">サブスクリプションの金額</param>
     /// <param name="subscribeAggregateId">サブスクリプション集約ID</param>
-    private void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
+    public void SetSubscribeItem(string subscribeName, decimal amount, Guid subscribeAggregateId)
     {
         _subscribeItem = new SubscribeItem(subscribeName, amount, subscribeAggregateId);
     }

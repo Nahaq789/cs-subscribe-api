@@ -1,9 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using Xunit;
 
 namespace Subscribe.Infrastructure.Test.Context;
+
+/// <summary>
+/// SubscribeDbContext のテストを提供します。
+/// </summary>
 public class SubscribeDbContextTest
 {
-    private SubscribeContext CreateContext()
+    /// <summary>
+    /// インメモリデータベースオプションを使用して新しい SubscribeContext のインスタンスを作成します。
+    /// </summary>
+    /// <returns>新しい SubscribeContext のインスタンス。</returns>
+    private static SubscribeContext CreateContext()
     {
         var options = new DbContextOptionsBuilder<SubscribeContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -12,6 +21,9 @@ public class SubscribeDbContextTest
         return new SubscribeContext(options);
     }
 
+    /// <summary>
+    /// データベースへの接続をテストします。
+    /// </summary>
     [Fact]
     public void Test_ConnectToDatabase_Success()
     {
@@ -23,6 +35,9 @@ public class SubscribeDbContextTest
         }
     }
 
+    /// <summary>
+    /// インメモリデータベースに期待されるテーブルが存在することをテストします。
+    /// </summary>
     [Fact]
     public void Test_DatabaseHasExpectedTables()
     {
