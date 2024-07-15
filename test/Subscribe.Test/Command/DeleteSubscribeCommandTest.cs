@@ -44,21 +44,21 @@ public class DeleteSubscribeCommandTest
             expectedDateOfCancellation: DateTime.UtcNow.AddYears(1),
             deleteDay: DateTime.UtcNow.AddYears(2)
         );
-        var _command = new DeleteSubscribeCommand(
+        var command = new DeleteSubscribeCommand(
             subscribeAggregateId: Guid.NewGuid(),
             userAggregateId: Guid.NewGuid()
         );
-        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId))
+        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(command.SubscribeAggregateId, command.UserAggregateId))
             .ReturnsAsync(subscribeData);
         _repositoryMock.Setup(m => m.UnitOfWork).Returns(_unitOfWorkMock.Object);
         _unitOfWorkMock.Setup(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
         
         //act
-        var result = await _handler.Handle(_command, CancellationToken.None);
+        var result = await _handler.Handle(command, CancellationToken.None).ConfigureAwait(true);
         
         //assert
         Assert.True(result);
-        _repositoryMock.Verify(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId), Times.Once());
+        _repositoryMock.Verify(m => m.FindBySubscribeAgIdAndUserAgId(command.SubscribeAggregateId, command.UserAggregateId), Times.Once());
         _unitOfWorkMock.Verify(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
     
@@ -82,21 +82,21 @@ public class DeleteSubscribeCommandTest
             expectedDateOfCancellation: DateTime.UtcNow.AddYears(1),
             deleteDay: DateTime.UtcNow.AddYears(2)
         );
-        var _command = new DeleteSubscribeCommand(
+        var command = new DeleteSubscribeCommand(
             subscribeAggregateId: Guid.NewGuid(),
             userAggregateId: Guid.NewGuid()
         );
-        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId))
+        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(command.SubscribeAggregateId, command.UserAggregateId))
             .ReturnsAsync(subscribeData);
         _repositoryMock.Setup(m => m.UnitOfWork).Returns(_unitOfWorkMock.Object);
         _unitOfWorkMock.Setup(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(false);
         
         //act
-        var result = await _handler.Handle(_command, CancellationToken.None);
+        var result = await _handler.Handle(command, CancellationToken.None).ConfigureAwait(true);
         
         //assert
         Assert.False(result);
-        _repositoryMock.Verify(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId), Times.Once());
+        _repositoryMock.Verify(m => m.FindBySubscribeAgIdAndUserAgId(command.SubscribeAggregateId, command.UserAggregateId), Times.Once());
         _unitOfWorkMock.Verify(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
     
@@ -107,14 +107,14 @@ public class DeleteSubscribeCommandTest
     public async Task Test_DeleteSubscribe_FindSubscribeThenNull()
     {
         //arrange
-        var _command = new DeleteSubscribeCommand(
+        var command = new DeleteSubscribeCommand(
             subscribeAggregateId: Guid.NewGuid(),
             userAggregateId: Guid.NewGuid()
         );
         
-        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId)).ReturnsAsync(() => null!);
+        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(command.SubscribeAggregateId, command.UserAggregateId)).ReturnsAsync(() => null!);
         
         //act & assert
-        Assert.ThrowsAsync<NullReferenceException>(async () => await _handler.Handle(_command, CancellationToken.None));
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _handler.Handle(command, CancellationToken.None).ConfigureAwait(true)).ConfigureAwait(true);
     }
 }
