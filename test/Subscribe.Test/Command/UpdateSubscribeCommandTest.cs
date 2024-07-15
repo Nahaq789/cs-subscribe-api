@@ -61,7 +61,7 @@ public class UpdateSubscribeCommandTest
             amount: 99.99m,
             expectedDateOfCancellation: DateTime.UtcNow.AddYears(1)
         );
-        _repositoryMock.Setup(m => m.FindBySubscribeAggregateId(It.IsAny<Guid>())).ReturnsAsync(subscribeData);
+        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId)).ReturnsAsync(subscribeData);
         _repositoryMock.Setup(m => m.UnitOfWork).Returns(_unitOfWorkMock.Object);
         _unitOfWorkMock.Setup(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
@@ -78,7 +78,7 @@ public class UpdateSubscribeCommandTest
         Assert.Equal(_command.CategoryAggregateId, subscribeData._categoryAggregateId);
         Assert.Equal(_command.UserAggregateId, subscribeData._userAggregateId);
         Assert.Equal(_command.ExpectedDateOfCancellation, subscribeData.ExpectedDateOfCancellation);
-        _repositoryMock.Verify(m => m.FindBySubscribeAggregateId(It.IsAny<Guid>()), Times.Once());
+        _repositoryMock.Verify(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId), Times.Once());
         _unitOfWorkMock.Verify(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
@@ -116,7 +116,7 @@ public class UpdateSubscribeCommandTest
             amount: 99.99m,
             expectedDateOfCancellation: DateTime.UtcNow.AddYears(1)
         );
-        _repositoryMock.Setup(m => m.FindBySubscribeAggregateId(It.IsAny<Guid>())).ReturnsAsync(subscribeData);
+        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId)).ReturnsAsync(subscribeData);
         _repositoryMock.Setup(m => m.UnitOfWork).Returns(_unitOfWorkMock.Object);
         _unitOfWorkMock.Setup(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
@@ -133,14 +133,13 @@ public class UpdateSubscribeCommandTest
         Assert.Equal(_command.CategoryAggregateId, subscribeData._categoryAggregateId);
         Assert.Equal(_command.UserAggregateId, subscribeData._userAggregateId);
         Assert.Equal(_command.ExpectedDateOfCancellation, subscribeData.ExpectedDateOfCancellation);
-        _repositoryMock.Verify(m => m.FindBySubscribeAggregateId(It.IsAny<Guid>()), Times.Once());
+        _repositoryMock.Verify(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId), Times.Once());
         _unitOfWorkMock.Verify(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     /// <summary>
     /// サブスクライブ更新コマンドのテスト
     /// </summary>
-    /// <returns>false</returns>
     [Fact]
     public async Task Test_UpdateSubscribe_FindSubscribeThenNull()
     {
@@ -158,7 +157,7 @@ public class UpdateSubscribeCommandTest
             amount: 99.99m,
             expectedDateOfCancellation: DateTime.UtcNow.AddYears(1)
         );
-        _repositoryMock.Setup(m => m.FindBySubscribeAggregateId(_command.SubscribeAggregateId)).ReturnsAsync(() => null!);
+        _repositoryMock.Setup(m => m.FindBySubscribeAgIdAndUserAgId(_command.SubscribeAggregateId, _command.UserAggregateId)).ReturnsAsync(() => null!);
         _repositoryMock.Setup(m => m.UnitOfWork).Returns(_unitOfWorkMock.Object);
         _unitOfWorkMock.Setup(m => m.SaveEntitiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(false);
 

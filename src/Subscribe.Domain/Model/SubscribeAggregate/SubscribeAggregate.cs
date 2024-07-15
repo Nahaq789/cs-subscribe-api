@@ -161,4 +161,9 @@ public class SubscribeAggregate : Entity, IAggregateRoot
 
         SubscribeItem.UpdateSubscribeDetail(subscribeName, amount, subscribeAggregateId);
     }
+
+    public void SetDeleteDay()
+    {
+        DeleteDay = DateTime.UtcNow;
+    }
 }
