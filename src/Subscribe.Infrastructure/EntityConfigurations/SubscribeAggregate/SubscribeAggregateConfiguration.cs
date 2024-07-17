@@ -58,8 +58,8 @@ internal class SubscribeAggregateConfiguration : IEntityTypeConfiguration<Subscr
             .HasColumnName("category_aggregate_id");
 
         builder.HasOne<CategoryAggregate>()
-            .WithOne()
-            .HasForeignKey<SubscribeAggregate>(f => f._categoryAggregateId)
+            .WithMany()
+            .HasForeignKey(f => f._categoryAggregateId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasIndex(f => f._categoryAggregateId);
