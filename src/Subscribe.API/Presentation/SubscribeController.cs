@@ -156,4 +156,23 @@ public class SubscribeController : Controller
         var result = await _subscribeQueries.GetSubscribeByUserAsync(userid);
         return TypedResults.Ok(result);
     }
+
+    [HttpGet]
+    [Route("/api/v1/subscribe/findbyid")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<Results<Ok<SubscribeAggregateDto>, BadRequest<string>>> GetSubscribeByUserAndAggregateAsync (
+            [FromHeader(Name = "x-requestId")] Guid requestId,
+            [FromQuery] Guid userid,
+            [FromQuery] Guid subscribeid
+            )
+    {
+        if (requestId == Guid.Empty)
+        {
+            _logger.LogWarning("RequestId is empty");
+            return TypedResults.BadRequest("RequestId is empty");
+        }
+        var result = await _subscribeQueries.GetSubscribeByUserAndAggregateAsync(subscribeid, userid);
+        return  TypedResults.Ok(result);
+    }
 }

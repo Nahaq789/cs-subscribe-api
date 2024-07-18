@@ -9,8 +9,8 @@ public record SubscribeAggregateDto
     public string ColorCode { get; set; }
     public bool IsYear { get; set; }
     public bool IsActive  { get; set; }
-    public Guid CategoryAggregeteId { get; set; }
-    public Guid UserAggregaeteId { get; set; }
+    public Guid CategoryAggregateId { get; set; }
+    public Guid UserAggregateId { get; set; }
     public DateTime? DeleteDay { get; set; }
     public SubscribeItemDto SubscribeItem { get; set; }
 }
