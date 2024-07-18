@@ -161,7 +161,7 @@ public class SubscribeController : Controller
     [Route("/api/v1/subscribe/findbyid")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<Results<Ok<SubscribeAggregateDto>, BadRequest<string>>> GetSubscribeByUserAndAggregateAsync (
+    public async Task<Results<Ok<SubscribeAggregateDto>, BadRequest<string>, ProblemHttpResult>> GetSubscribeByUserAndAggregateAsync (
             [FromHeader(Name = "x-requestId")] Guid requestId,
             [FromQuery] Guid userid,
             [FromQuery] Guid subscribeid
@@ -173,6 +173,11 @@ public class SubscribeController : Controller
             return TypedResults.BadRequest("RequestId is empty");
         }
         var result = await _subscribeQueries.GetSubscribeByUserAndAggregateAsync(subscribeid, userid);
+
+        if (result == null)
+        {
+            return TypedResults.Problem(detail: "Failed get subscribe", statusCode: 500);
+        }
         return  TypedResults.Ok(result);
     }
 }
