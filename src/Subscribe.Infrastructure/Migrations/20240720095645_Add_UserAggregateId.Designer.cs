@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Subscribe.Infrastructure.Context;
@@ -11,9 +12,11 @@ using Subscribe.Infrastructure.Context;
 namespace Subscribe.Infrastructure.Migrations
 {
     [DbContext(typeof(SubscribeContext))]
-    partial class SubscribeContextModelSnapshot : ModelSnapshot
+    [Migration("20240720095645_Add_UserAggregateId")]
+    partial class Add_UserAggregateId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

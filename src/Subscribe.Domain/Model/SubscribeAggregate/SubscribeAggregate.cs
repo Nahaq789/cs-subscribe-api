@@ -1,3 +1,4 @@
+using Subscribe.Domain.Exceptions;
 using Subscribe.Domain.SeedWork;
 
 namespace Subscribe.Domain.Model.SubscribeAggregate;

@@ -30,6 +30,10 @@ internal class CategoryAggregateConfiguration : IEntityTypeConfiguration<Categor
             .IsRequired()
             .HasColumnName("is_active");
 
+        builder.Property(e => e.UserAggregateId)
+            .HasColumnName("user_aggregate_id")
+            .IsRequired();
+
         builder.HasOne(e => e.CategoryItem)
             .WithOne()
             .HasForeignKey<CategoryItem>(f => f.CategoryAggregateId);

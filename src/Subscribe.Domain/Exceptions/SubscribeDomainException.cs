@@ -1,3 +1,5 @@
+namespace Subscribe.Domain.Exceptions;
+
 public class SubscribeDomainException : Exception
 {
     public SubscribeDomainException()
