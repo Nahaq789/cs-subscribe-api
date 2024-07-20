@@ -8,7 +8,7 @@ public class SubscribeQueries(NpgsqlDataSource dataSource) : ISubscribeQueries
     public async Task<IEnumerable<SubscribeAggregateDto>> GetSubscribeByUserAsync(Guid userAggregateId)
     {
         await using var connection = await dataSource.OpenConnectionAsync();
-        
+
         string sql = @"
             SELECT 
                 s.subscribe_aggregate_id SubscribeAggregateId,
@@ -26,7 +26,7 @@ public class SubscribeQueries(NpgsqlDataSource dataSource) : ISubscribeQueries
             FROM subscribe_aggregate s
             INNER JOIN subscribe_item i ON s.subscribe_aggregate_id = i.subscribe_aggregate_id
             WHERE s.user_aggregate_id = @UserAggregateId;";
-        
+
         var result = await connection.QueryAsync<SubscribeAggregateDto, SubscribeItemDto, SubscribeAggregateDto>(
             sql: sql,
             map: (subscribeAggregate, subscribeItem) =>
@@ -36,7 +36,7 @@ public class SubscribeQueries(NpgsqlDataSource dataSource) : ISubscribeQueries
                 },
             param: new { UserAggregateId = userAggregateId },
             splitOn: "SubscribeName");
-        
+
         return result;
     }
 
@@ -100,7 +100,7 @@ internal class SubscribeAggregateDtoWithItem
     public DateTime? ExpectedDateOfCancellation { get; set; }
     public string ColorCode { get; set; }
     public bool IsYear { get; set; }
-    public bool IsActive  { get; set; }
+    public bool IsActive { get; set; }
     public Guid CategoryAggregateId { get; set; }
     public Guid UserAggregateId { get; set; }
     public DateTime? DeleteDay { get; set; }
