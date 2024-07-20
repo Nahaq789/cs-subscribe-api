@@ -55,7 +55,7 @@ public class CategoryAggregate : IAggregateRoot
     /// <param name="isActive">このカテゴリーがアクティブかどうか</param>
     /// <param name="categoryName">カテゴリの名前</param>
     /// <param name="userAggregateId">ユーザ集約ID</param>
-    public CategoryAggregate(Guid categoryAggregateId, string colorCode, bool isDefault, bool isActive, string categoryName, Guid userAggregateId, string? iconFilePath = null) : this()
+    public CategoryAggregate(Guid categoryAggregateId, string colorCode, bool isActive, string categoryName, Guid userAggregateId, string? iconFilePath = null, bool isDefault = false) : this()
     {
         CategoryAggregateId = GeneratePrimaryKey(categoryAggregateId);
         ColorCode = colorCode;
@@ -95,10 +95,9 @@ public class CategoryAggregate : IAggregateRoot
         _categoryItem = new CategoryItem(categoryName, categoryAggregateId);
     }
 
-    public void UpdateCategoryAggregate(string colorCode, bool isDefault, bool isActive, string iconFilePath)
+    public void UpdateCategoryAggregate(string colorCode, bool isActive, string iconFilePath)
     {
         ColorCode = colorCode;
-        IsDefault = isDefault;
         IsActive = isActive;
         IconFilePath = iconFilePath;
     }

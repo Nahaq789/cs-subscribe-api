@@ -12,11 +12,6 @@ public class CreateCategoryCommand : IRequest<bool>
     [DataMember]
     public string? IconFilePath { get; set; }
 
-    [DataMember]
-    public bool IsDefault { get; set; }
-
-    [DataMember]
-    public bool IsActive { get; set; }
 
     [DataMember]
     public string CategoryName { get; set; }
@@ -24,12 +19,10 @@ public class CreateCategoryCommand : IRequest<bool>
     [DataMember]
     public Guid UserAggregateId { get; set; }
 
-    public CreateCategoryCommand(string colorCode, string? iconFilePath, bool isDefault, bool isActive, string categoryName, Guid userAggregateId)
+    public CreateCategoryCommand(string colorCode, string? iconFilePath, string categoryName, Guid userAggregateId)
     {
         ColorCode = colorCode;
         IconFilePath = iconFilePath;
-        IsDefault = isDefault;
-        IsActive = isActive;
         CategoryName = categoryName;
         UserAggregateId = userAggregateId;
     }

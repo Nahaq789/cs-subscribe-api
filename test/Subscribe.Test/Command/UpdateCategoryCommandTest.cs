@@ -47,7 +47,6 @@ public class UpdateCategoryCommandTest
             aggregateId: Guid.NewGuid(),
             colorCode: "#BBB",
             iconFilePath: "path",
-            isDefault: false,
             isActive: false,
             categoryName: "category Name",
             userAggregateId: Guid.NewGuid()
@@ -63,7 +62,6 @@ public class UpdateCategoryCommandTest
         Assert.True(result);
         Assert.Equal(command.ColorCode, categoryData.ColorCode);
         Assert.Equal(command.IconFilePath, categoryData.IconFilePath);
-        Assert.Equal(command.IsDefault, categoryData.IsDefault);
         Assert.Equal(command.IsActive, categoryData.IsActive);
         Assert.Equal(command.CategoryName, categoryData.CategoryItem.CategoryName);
 
@@ -92,7 +90,6 @@ public class UpdateCategoryCommandTest
             aggregateId: Guid.NewGuid(),
             colorCode: "#BBB",
             iconFilePath: "path",
-            isDefault: false,
             isActive: false,
             categoryName: "category Name",
             userAggregateId: Guid.NewGuid()
@@ -121,7 +118,6 @@ public class UpdateCategoryCommandTest
             aggregateId: Guid.NewGuid(),
             colorCode: "#BBB",
             iconFilePath: "path",
-            isDefault: false,
             isActive: false,
             categoryName: "category Name",
             userAggregateId: Guid.NewGuid()

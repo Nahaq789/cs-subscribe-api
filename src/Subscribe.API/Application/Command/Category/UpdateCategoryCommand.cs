@@ -16,9 +16,6 @@ public class UpdateCategoryCommand : IRequest<bool>
     public string IconFilePath { get; set; }
 
     [DataMember]
-    public bool IsDefault { get; set; }
-
-    [DataMember]
     public bool IsActive { get; set; }
 
     [DataMember]
@@ -27,12 +24,11 @@ public class UpdateCategoryCommand : IRequest<bool>
     [DataMember]
     public Guid UserAggregateId { get; set; }
 
-    public UpdateCategoryCommand(Guid aggregateId, string colorCode, string iconFilePath, bool isDefault, bool isActive, string categoryName, Guid userAggregateId)
+    public UpdateCategoryCommand(Guid aggregateId, string colorCode, string iconFilePath, bool isActive, string categoryName, Guid userAggregateId)
     {
         AggregateId = aggregateId;
         ColorCode = colorCode;
         IconFilePath = iconFilePath;
-        IsDefault = isDefault;
         IsActive = isActive;
         CategoryName = categoryName;
         UserAggregateId = userAggregateId;

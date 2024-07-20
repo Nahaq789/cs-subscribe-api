@@ -18,7 +18,6 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
         category.UpdateCategoryAggregate(
             colorCode: command.ColorCode,
-            isDefault: command.IsDefault,
             isActive: command.IsActive,
             iconFilePath: command.IconFilePath
         );

@@ -14,7 +14,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
 
     public async Task<bool> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
-        var category = new CategoryAggregate(categoryAggregateId: Guid.NewGuid(), colorCode: command.ColorCode, iconFilePath: command.IconFilePath, isDefault: command.IsDefault, isActive: command.IsActive, categoryName: command.CategoryName, userAggregateId: command.UserAggregateId);
+        var category = new CategoryAggregate(categoryAggregateId: Guid.NewGuid(), colorCode: command.ColorCode, iconFilePath: command.IconFilePath, isActive: true, categoryName: command.CategoryName, userAggregateId: command.UserAggregateId);
 
         await _categoryRepository.AddAsync(category);
         return await _categoryRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

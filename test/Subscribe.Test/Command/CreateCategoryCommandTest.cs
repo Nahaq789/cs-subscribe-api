@@ -42,8 +42,6 @@ public class CreateCategoryCommandTest
         var command = new CreateCategoryCommand(
             colorCode: "#FFFFFF",
             iconFilePath: "path",
-            isDefault: true,
-            isActive: true,
             categoryName: "test category",
             userAggregateId: Guid.NewGuid()
         );
@@ -73,8 +71,6 @@ public class CreateCategoryCommandTest
         var command = new CreateCategoryCommand(
             colorCode: "#FFFFFF",
             iconFilePath: "path",
-            isDefault: true,
-            isActive: true,
             categoryName: "test category",
             userAggregateId: Guid.NewGuid()
         );
