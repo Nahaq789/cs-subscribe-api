@@ -20,11 +20,11 @@ public class SubscribeRepository : ISubscribeRepository
         await _context.SubscribeAggregate.AddAsync(aggregate);
     }
 
-    public async Task<SubscribeAggregate> FindBySubscribeAggregateId(Guid aggregateId)
+    public async Task<SubscribeAggregate> FindBySubscribeAgIdAndUserAgId(Guid subscribeAggregateId, Guid userAggregateId)
     {
         var subscribe = await _context.SubscribeAggregate
             .Include(e => e.SubscribeItem)
-            .FirstOrDefaultAsync(p => p.SubscribeAggregateId == aggregateId);
+            .FirstOrDefaultAsync(p => p.SubscribeAggregateId == subscribeAggregateId && p._userAggregateId == userAggregateId);
 
         return subscribe;
     }

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using Subscribe.API.Application.Query.Subscribe;
 using Subscribe.Domain.Model.SubscribeAggregate;
 using Subscribe.Infrastructure.Context;
 using Subscribe.Infrastructure.Repositories;
@@ -15,6 +17,8 @@ public static class Extension
             options.UseNpgsql(connectionString);
         });
 
+        builder.Services.AddSingleton(NpgsqlDataSource.Create(connectionString));
+
         var services = builder.Services;
         services.AddMediatR((cfg) =>
         {
@@ -22,5 +26,7 @@ public static class Extension
         });
 
         builder.Services.AddTransient<ISubscribeRepository, SubscribeRepository>();
+
+        builder.Services.AddScoped<ISubscribeQueries, SubscribeQueries>();
     }
 }

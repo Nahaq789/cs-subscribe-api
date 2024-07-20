@@ -13,7 +13,7 @@ public class UpdateSubscribeCommandHandler : IRequestHandler<UpdateSubscribeComm
     }
     public async Task<bool> Handle(UpdateSubscribeCommand command, CancellationToken cancellationToken)
     {
-        var baseSubscribe = await _subscribeRepository.FindBySubscribeAggregateId(command.SubscribeAggregateId);
+        var baseSubscribe = await _subscribeRepository.FindBySubscribeAgIdAndUserAgId(command.SubscribeAggregateId, command.UserAggregateId);
 
         baseSubscribe.UpdateSubscribeAggregate(
             paymentDay: command.PaymentDay,
