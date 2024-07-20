@@ -1,4 +1,5 @@
-﻿using Subscribe.Domain.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Subscribe.Domain.Model;
 using Subscribe.Domain.SeedWork;
 using Subscribe.Infrastructure.Context;
 
@@ -21,7 +22,10 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<CategoryAggregate> FindByUserAndCategoryAggregateId(Guid categoryAggregateId, Guid userAggregateId)
     {
-        throw new NotImplementedException();
-    }
+        var result = await _subscribeContext.CategoryAggregate
+        .Include(e => e.CategoryItem)
+        .FirstOrDefaultAsync(x => x.CategoryAggregateId == categoryAggregateId && x.UserAggregateId == userAggregateId);
 
+        return result;
+    }
 }
