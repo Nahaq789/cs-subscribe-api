@@ -1,3 +1,10 @@
+# 採用技術
+
+<img src="https://img.shields.io/badge/-.NET-512BD4.svg?logo=.net">
+<img src="https://img.shields.io/badge/-Docker-1488A1.svg?logo=docker&style=plastic">
+<img src="https://img.shields.io/badge/-Ubuntu-E95.svg?logo=ubuntu&style=plastic">
+<img src="https://img.shields.io/badge/-Postgresql-EEE.svg?logo=postgresql&style=plastic">
+
 # 環境構築
 
 ## インストールするもの
